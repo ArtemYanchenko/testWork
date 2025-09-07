@@ -61,7 +61,7 @@ export const FormBuilder: FC<FormBuilderProps> = ({
 
   return (
     <Box component="form" onSubmit={submit} noValidate>
-      <Typography variant="h4" align="center" sx={{ mb: 3 }}>
+      <Typography variant="h4" align="center" sx={{ pb: 3 }}>
         Form Builder
       </Typography>
 

@@ -64,7 +64,7 @@ export function ObjectFields<T extends FieldValues = FieldValues>({
               sx={{
                 p: 2,
                 borderRadius: 2,
-                backgroundColor: "grey.50",
+                backgroundColor: "grey.100",
               }}
             >
               <ArrayField
