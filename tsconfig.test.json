@@ -1,8 +1,12 @@
 {
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "types": ["jest", "@testing-library/jest-dom"],
-    "noEmit": true
+    "noEmit": true,
+    "verbatimModuleSyntax": false
   },
   "include": ["tests/**/*.ts", "tests/**/*.tsx", "jest.setup.ts"]
 }

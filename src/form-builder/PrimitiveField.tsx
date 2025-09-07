@@ -1,7 +1,27 @@
-import {Controller, type Control, type FieldValues, type Path} from "react-hook-form";
-import { TextField, Checkbox, FormControl, FormControlLabel, FormHelperText, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+    Controller,
+    type Control,
+    type FieldValues,
+    type Path,
+} from "react-hook-form";
+import {
+    TextField,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    InputLabel,
+    Select,
+    MenuItem,
+} from "@mui/material";
 import type { JSONSchema7 } from "json-schema";
-import { getMinMaxProps, isEnum, isNumberLike, titleFromName, getErrorMessage } from "./utils";
+import {
+    getMinMaxProps,
+    isEnum,
+    isNumberLike,
+    titleFromName,
+    getErrorMessage,
+} from "./utils";
 
 type FieldProps<T extends FieldValues = FieldValues> = {
     name: Path<T>;
@@ -12,7 +32,6 @@ type FieldProps<T extends FieldValues = FieldValues> = {
     labelOverride?: string;
 };
 
-
 export function PrimitiveField<T extends FieldValues = FieldValues>({
                                                                         name,
                                                                         schema,
@@ -21,7 +40,7 @@ export function PrimitiveField<T extends FieldValues = FieldValues>({
                                                                         required,
                                                                         labelOverride,
                                                                     }: FieldProps<T>) {
-    const label = labelOverride ?? titleFromName(name);
+    const label = labelOverride ?? schema.title ?? titleFromName(name);
     const helper = getErrorMessage(errors);
 
     if (isEnum(schema)) {
@@ -34,8 +53,11 @@ export function PrimitiveField<T extends FieldValues = FieldValues>({
                 control={control}
                 render={({ field }) => (
                     <FormControl fullWidth error={!!helper} size="small">
-                        <InputLabel>{`${label}${required ? " *" : ""}`}</InputLabel>
+                        <InputLabel id={`${field.name}-label`}>
+                            {`${label}${required ? " *" : ""}`}
+                        </InputLabel>
                         <Select
+                            labelId={`${field.name}-label`}
                             label={`${label}${required ? " *" : ""}`}
                             displayEmpty
                             value={(field.value ?? "") as unknown as string | number}
@@ -59,7 +81,12 @@ export function PrimitiveField<T extends FieldValues = FieldValues>({
                                 <em>—</em>
                             </MenuItem>
                             {values.map((v) => (
-                                <MenuItem key={String(v)} value={kind === "boolean" ? String(v) : (v as string | number)}>
+                                <MenuItem
+                                    key={String(v)}
+                                    value={
+                                        kind === "boolean" ? String(v) : (v as string | number)
+                                    }
+                                >
                                     {String(v)}
                                 </MenuItem>
                             ))}
@@ -79,7 +106,12 @@ export function PrimitiveField<T extends FieldValues = FieldValues>({
                 render={({ field }) => (
                     <FormControl error={!!helper}>
                         <FormControlLabel
-                            control={<Checkbox checked={Boolean(field.value)} onChange={(e) => field.onChange(e.target.checked)} />}
+                            control={
+                                <Checkbox
+                                    checked={Boolean(field.value)}
+                                    onChange={(e) => field.onChange(e.target.checked)}
+                                />
+                            }
                             label={`${label}${required ? " *" : ""}`}
                         />
                         {helper && <FormHelperText>{helper}</FormHelperText>}

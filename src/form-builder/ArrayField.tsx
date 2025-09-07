@@ -37,14 +37,20 @@ export function ArrayField<T extends FieldValues = FieldValues>({
         : schema.items;
     const itemsSchema = asJSONSchema(itemsDef);
 
-    const { fields, append, remove } = useFieldArray<T, ArrayPath<T>>({ control, name });
+    const { fields, append, remove } = useFieldArray<T, ArrayPath<T>>({
+        control,
+        name,
+    });
     const minItems = schema.minItems ?? 0;
     const maxItems = schema.maxItems ?? Infinity;
 
     const handleAdd = () => {
         if (fields.length >= maxItems) return;
-        const value =
-            isObjectSchema(itemsSchema) ? {} : isArraySchema(itemsSchema) ? [] : emptyValueForSchema(itemsSchema);
+        const value = isObjectSchema(itemsSchema)
+            ? {}
+            : isArraySchema(itemsSchema)
+                ? []
+                : emptyValueForSchema(itemsSchema);
         append(value as T[ArrayPath<T>][number]);
     };
 
@@ -77,13 +83,21 @@ export function ArrayField<T extends FieldValues = FieldValues>({
 
             {fields.map((field, index) => {
                 const itemName = `${name}.${index}` as Path<T>;
-                const itemErrors = (errors as Record<number, unknown> | undefined)?.[index];
+                const itemErrors = (errors as Record<number, unknown> | undefined)?.[
+                    index
+                    ];
 
                 return (
                     <Paper key={field.id} variant="outlined" sx={{ p: 2 }}>
                         <Stack spacing={2}>
-                            <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                <Typography variant="subtitle2">{`${titleFromName(name)} ${index + 1}`}</Typography>
+                            <Stack
+                                direction="row"
+                                justifyContent="space-between"
+                                alignItems="center"
+                            >
+                                <Typography variant="subtitle2">
+                                    {`${titleFromName(name)} ${index + 1}`}
+                                </Typography>
                                 <IconButton
                                     onClick={() => fields.length > minItems && remove(index)}
                                     disabled={fields.length <= minItems}
@@ -93,11 +107,27 @@ export function ArrayField<T extends FieldValues = FieldValues>({
                             </Stack>
 
                             {isObjectSchema(itemsSchema) ? (
-                                <ObjectFields baseName={itemName} schema={itemsSchema} control={control} errors={itemErrors} />
+                                <ObjectFields
+                                    baseName={itemName}
+                                    schema={itemsSchema}
+                                    control={control}
+                                    errors={itemErrors}
+                                />
                             ) : isArraySchema(itemsSchema) ? (
-                                <ArrayField name={itemName as ArrayPath<T>} schema={itemsSchema} control={control} errors={itemErrors} />
+                                <ArrayField
+                                    name={itemName as ArrayPath<T>}
+                                    schema={itemsSchema}
+                                    control={control}
+                                    errors={itemErrors}
+                                />
                             ) : (
-                                <PrimitiveField name={itemName} schema={itemsSchema as JSONSchema7} control={control} errors={itemErrors} />
+                                <PrimitiveField
+                                    name={itemName}
+                                    schema={itemsSchema as JSONSchema7}
+                                    control={control}
+                                    errors={itemErrors}
+                                    labelOverride={`${titleFromName(name).replace(/s$/, "")} ${index + 1}`}
+                                />
                             )}
                         </Stack>
                     </Paper>
