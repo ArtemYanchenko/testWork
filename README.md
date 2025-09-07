@@ -2,8 +2,7 @@
 
 ## 🌐 Production
 
-Готовая версия UI FormBuilder доступна по адресу:
-👉 https://formbuildermts.netlify.app/
+Готовая версия UI FormBuilder доступна по адресу: https://formbuildermts.netlify.app/
 
 ## 📌 Описание
 
