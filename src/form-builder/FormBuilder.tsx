@@ -4,7 +4,7 @@ import { ajvResolver } from "@hookform/resolvers/ajv";
 import {Box, Stack, Typography, Divider, Button, Paper} from "@mui/material";
 import type { JSONSchema7 } from "json-schema";
 import type { JSONSchemaType } from "ajv";
-import { ObjectFields } from "./ObjectFields";
+import { ObjectFields } from "./components/ObjectFields.tsx";
 import { isObjectSchema, emptyValueForSchema } from "./utils";
 
 type FormBuilderProps<TForm extends FieldValues = FieldValues> = {
