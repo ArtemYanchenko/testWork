@@ -9,6 +9,7 @@ import {
   getMinMaxProps,
   emptyValueForSchema,
   getErrorMessage,
+  buildInitialDefaults,
 } from "../../src/form-builder/utils";
 
 describe("utils", () => {
@@ -83,5 +84,25 @@ describe("utils", () => {
     expect(getErrorMessage({ message: "Ошибка" })).toBe("Ошибка");
     expect(getErrorMessage({ message: 123 })).toBeUndefined();
     expect(getErrorMessage(undefined)).toBeUndefined();
+  });
+
+  test("buildInitialDefaults возвращает provided если он передан", () => {
+    const schema: JSONSchema7 = { type: "string" };
+    const provided = { name: "Kirill" };
+    expect(buildInitialDefaults(schema, provided)).toBe(provided);
+  });
+
+  test("buildInitialDefaults использует emptyValueForSchema если provided не передан", () => {
+    const schemaString: JSONSchema7 = { type: "string" };
+    expect(buildInitialDefaults(schemaString)).toBe("");
+
+    const schemaBool: JSONSchema7 = { type: "boolean" };
+    expect(buildInitialDefaults(schemaBool)).toBe(false);
+
+    const schemaArr: JSONSchema7 = { type: "array", items: { type: "string" } };
+    expect(buildInitialDefaults(schemaArr)).toEqual([]);
+
+    const schemaObj: JSONSchema7 = { type: "object", properties: {} };
+    expect(buildInitialDefaults(schemaObj)).toEqual({});
   });
 });

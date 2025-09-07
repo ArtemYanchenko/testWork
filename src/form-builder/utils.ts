@@ -1,4 +1,5 @@
 import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import type { DefaultValues, FieldValues } from "react-hook-form";
 
 export function isObjectSchema(
   schema?: JSONSchema7,
@@ -60,4 +61,13 @@ export function emptyValueForSchema(schema?: JSONSchema7): unknown {
 export function getErrorMessage(err: unknown): string | undefined {
   const msg = (err as { message?: unknown } | undefined)?.message;
   return typeof msg === "string" ? msg : undefined;
+}
+
+export function buildInitialDefaults<TForm extends FieldValues>(
+  schema: JSONSchema7,
+  provided?: DefaultValues<TForm>,
+): DefaultValues<TForm> | undefined {
+  if (provided) return provided;
+  const v = emptyValueForSchema(schema);
+  return v as unknown as DefaultValues<TForm>;
 }

@@ -5,7 +5,7 @@ import { Box, Stack, Typography, Divider, Button, Paper } from "@mui/material";
 import type { JSONSchema7 } from "json-schema";
 import type { JSONSchemaType } from "ajv";
 import { ObjectFields } from "./components/ObjectFields.tsx";
-import { isObjectSchema, emptyValueForSchema } from "./utils";
+import { isObjectSchema, buildInitialDefaults } from "./utils";
 
 type FormBuilderProps<TForm extends FieldValues = FieldValues> = {
   schema: JSONSchema7;
@@ -13,15 +13,6 @@ type FormBuilderProps<TForm extends FieldValues = FieldValues> = {
   onSubmit: (values: TForm) => void;
   title?: string;
 };
-
-function buildInitialDefaults<TForm extends FieldValues>(
-  schema: JSONSchema7,
-  provided?: DefaultValues<TForm>,
-): DefaultValues<TForm> | undefined {
-  if (provided) return provided;
-  const v = emptyValueForSchema(schema);
-  return v as unknown as DefaultValues<TForm>;
-}
 
 export const FormBuilder: FC<FormBuilderProps> = ({
   schema,
