@@ -46,15 +46,26 @@ export function ObjectFields<T extends FieldValues = FieldValues>({
 
                 if (isArraySchema(fieldSchema)) {
                     return (
-                        <ArrayField
+                        <Paper
                             key={fieldName}
-                            name={fieldName as ArrayPath<T>}
-                            schema={fieldSchema}
-                            control={control}
-                            errors={fieldErrors}
-                        />
+                            variant="outlined"
+                            sx={{
+                                p: 2,
+                                borderRadius: 2,
+                                backgroundColor:"grey.50",
+                            }}
+                        >
+                            <ArrayField
+                                name={fieldName as ArrayPath<T>}
+                                schema={fieldSchema}
+                                control={control}
+                                errors={fieldErrors}
+                            />
+                        </Paper>
                     );
                 }
+
+
 
                 return (
                     <PrimitiveField

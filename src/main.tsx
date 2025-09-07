@@ -6,7 +6,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <CssBaseline />
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ mt: 4 }}>
             <App />
         </Container>
     </React.StrictMode>

@@ -1,7 +1,7 @@
 import { type FC, useMemo } from "react";
 import { useForm, type FieldValues, type DefaultValues } from "react-hook-form";
 import { ajvResolver } from "@hookform/resolvers/ajv";
-import { Box, Stack, Typography, Divider, Button } from "@mui/material";
+import {Box, Stack, Typography, Divider, Button, Paper} from "@mui/material";
 import type { JSONSchema7 } from "json-schema";
 import type { JSONSchemaType } from "ajv";
 import { ObjectFields } from "./ObjectFields";
@@ -54,23 +54,37 @@ export const FormBuilder: FC<FormBuilderProps> = ({ schema, defaultValues, onSub
 
     return (
         <Box component="form" onSubmit={submit} noValidate>
-            <Stack spacing={2}>
-                {title && (
-                    <>
-                        <Typography variant="h6">{title}</Typography>
-                        <Divider />
-                    </>
-                )}
-                <ObjectFields baseName="" schema={schema as JSONSchema7 & { type: "object" }} control={control} errors={errors} />
-                <Stack direction="row" spacing={2}>
-                    <Button type="submit" variant="contained" disabled={isSubmitting}>
-                        Submit
-                    </Button>
-                    <Button type="button" variant="outlined" onClick={handleReset}>
-                        Reset
-                    </Button>
+            <Typography variant="h4" align="center" sx={{ mb: 3 }}>
+                Form Builder
+            </Typography>
+
+            <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
+                <Stack spacing={2}>
+                    {title && (
+                        <>
+                            <Typography variant="h6">{title}</Typography>
+                            <Divider />
+                        </>
+                    )}
+
+                    <ObjectFields
+                        baseName=""
+                        schema={schema as JSONSchema7 & { type: "object" }}
+                        control={control}
+                        errors={errors}
+                    />
+
+                    <Stack direction="row" spacing={2} justifyContent="flex-end">
+                        <Button type="submit" variant="contained" disabled={isSubmitting}>
+                            Submit
+                        </Button>
+                        <Button type="button" variant="outlined" onClick={handleReset}>
+                            Reset
+                        </Button>
+                    </Stack>
                 </Stack>
-            </Stack>
+            </Paper>
         </Box>
     );
+
 };
