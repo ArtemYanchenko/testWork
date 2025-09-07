@@ -26,7 +26,11 @@ export const schema: JSONSchema7 = {
         type: "object",
         properties: {
           relation: { enum: ["mother", "father"] },
-          age: { type: "integer" },
+          age: {
+            type: "number",
+            minimum: 1,
+            maximum: 120,
+          },
           name: { type: "string" },
           secondName: { type: "string" },
 
@@ -34,7 +38,11 @@ export const schema: JSONSchema7 = {
             type: "object",
             properties: {
               name: { type: "string" },
-              age: { type: "integer" },
+              age: {
+                type: "number",
+                minimum: 1,
+                maximum: 120,
+              },
               secondName: { type: "string" },
               retired: { type: "boolean" },
             },
@@ -44,7 +52,11 @@ export const schema: JSONSchema7 = {
             type: "object",
             properties: {
               name: { type: "string" },
-              age: { type: "integer" },
+              age: {
+                type: "number",
+                minimum: 1,
+                maximum: 120,
+              },
               secondName: { type: "string" },
               retired: { type: "boolean" },
             },

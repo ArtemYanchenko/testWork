@@ -6,7 +6,7 @@ import {
   isArraySchema,
   titleFromName,
 } from "../utils.ts";
-import { PrimitiveField } from "./PrimitiveField.tsx";
+import { PrimitiveField } from "./PrimitiveField";
 import { ArrayField } from "./ArrayField.tsx";
 import {
   type Control,

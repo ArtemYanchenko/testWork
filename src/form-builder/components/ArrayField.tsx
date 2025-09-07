@@ -5,7 +5,6 @@ import {
   type FieldValues,
   type ArrayPath,
   type Path,
-  useWatch,
 } from "react-hook-form";
 import { Stack, Typography, Paper, Button, IconButton } from "@mui/material";
 import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
@@ -15,9 +14,8 @@ import {
   isObjectSchema,
   isArraySchema,
   titleFromName,
-  emptyValueForSchema,
 } from "../utils.ts";
-import { PrimitiveField } from "./PrimitiveField.tsx";
+import { PrimitiveField } from "./PrimitiveField";
 import { ObjectFields } from "./ObjectFields.tsx";
 
 type FieldProps<T extends FieldValues = FieldValues> = {
@@ -43,30 +41,18 @@ export function ArrayField<T extends FieldValues = FieldValues>({
   const { fields, append, remove } = useFieldArray<T, ArrayPath<T>>({
     control,
     name,
+    keyName: "id",
   });
+
   const minItems = schema.minItems ?? 0;
   const maxItems = schema.maxItems ?? Infinity;
 
   const handleAdd = useCallback(() => {
     if (fields.length >= maxItems) return;
-
-    const value = isObjectSchema(itemsSchema)
-      ? {}
-      : isArraySchema(itemsSchema)
-        ? []
-        : itemsSchema?.type === "string"
-          ? undefined
-          : emptyValueForSchema(itemsSchema);
-
-    append(value as T[ArrayPath<T>][number]);
-  }, [fields.length, maxItems, itemsSchema, append]);
+    append("" as T[ArrayPath<T>][number]);
+  }, [fields.length, maxItems, append]);
 
   const didInitRef = useRef(false);
-
-  const firstValue = useWatch({
-    control,
-    name: `${name}.0` as Path<T>,
-  });
 
   useEffect(() => {
     if (didInitRef.current) return;
@@ -88,13 +74,7 @@ export function ArrayField<T extends FieldValues = FieldValues>({
           variant="outlined"
           size="small"
           onClick={handleAdd}
-          disabled={
-            fields.length >= maxItems ||
-            (fields.length > 0 &&
-              !isObjectSchema(itemsSchema) &&
-              !isArraySchema(itemsSchema) &&
-              (firstValue === undefined || firstValue === ""))
-          }
+          disabled={fields.length >= maxItems}
         >
           Add
         </Button>

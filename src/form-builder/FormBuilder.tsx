@@ -47,16 +47,17 @@ export const FormBuilder: FC<FormBuilderProps> = ({
   } = useForm({
     resolver,
     defaultValues: buildInitialDefaults(schema, defaultValues),
-    mode: "onBlur",
+    mode: "onChange",
     reValidateMode: "onChange",
-    shouldUnregister: true,
+    shouldUnregister: false,
   });
 
   const submit = handleSubmit(onSubmit as (values: FieldValues) => void);
   const handleReset = () => reset(buildInitialDefaults(schema, defaultValues));
 
-  if (!isObjectSchema(schema))
+  if (!isObjectSchema(schema)) {
     return <Typography color="error">Root schema must be an object</Typography>;
+  }
 
   return (
     <Box component="form" onSubmit={submit} noValidate>
