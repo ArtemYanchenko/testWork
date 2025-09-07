@@ -1,135 +1,132 @@
 {
-    "$id": "https://example.com/schemas/dashboard.schema.json",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "additionalProperties": false,
-    "required": ["version", "id", "title", "grid", "sections"],
-    "properties": {
-        "version": { "const": "1.0" },
-        "id": { "type": "string", "minLength": 1 },
-        "title": { "type": "string", "minLength": 1 },
-        "grid": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "columns": { "type": "integer", "minimum": 1 },
-                "rowHeightPx": { "type": "integer", "minimum": 1 },
-                "columnGap": { "type": "integer", "minimum": 0 },
-                "rowGap": { "type": "integer", "minimum": 0 }
-            },
-            "required": ["columns", "rowHeightPx", "columnGap", "rowGap"]
+  "$id": "https://example.com/schemas/dashboard.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "title", "grid", "sections"],
+  "properties": {
+    "version": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "grid": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "columns": { "type": "integer", "minimum": 1 },
+        "rowHeightPx": { "type": "integer", "minimum": 1 },
+        "columnGap": { "type": "integer", "minimum": 0 },
+        "rowGap": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["columns", "rowHeightPx", "columnGap", "rowGap"]
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "defaultColorSchemes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "linear": { "type": "array", "items": { "type": "string" } },
+            "area": { "type": "array", "items": { "type": "string" } },
+            "bar": { "type": "array", "items": { "type": "string" } }
+          }
         },
-        "theme": {
-            "type": "object",
-            "additionalProperties": true,
-            "properties": {
-                "defaultColorSchemes": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "linear": { "type": "array", "items": { "type": "string" } },
-                        "area":   { "type": "array", "items": { "type": "string" } },
-                        "bar":    { "type": "array", "items": { "type": "string" } }
-                    }
-                },
-                "background": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "page": { "type": "string" },
-                        "card": { "type": "string" }
-                    }
-                },
-                "typography": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "fontFamily": { "type": "string" }
-                    }
-                }
-            }
+        "background": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "page": { "type": "string" },
+            "card": { "type": "string" }
+          }
         },
-        "sections": {
+        "typography": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fontFamily": { "type": "string" }
+          }
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "gapY": { "type": "integer", "minimum": 0 },
+          "charts": {
             "type": "array",
             "minItems": 1,
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "id": { "type": "string" },
-                    "title": { "type": "string" },
-                    "gapY": { "type": "integer", "minimum": 0 },
-                    "charts": {
-                        "type": "array",
-                        "minItems": 1,
-                        "items": { "$ref": "#/$defs/chartConfig" }
-                    }
-                },
-                "required": ["id", "charts"]
-            }
+            "items": { "$ref": "#/$defs/chartConfig" }
+          }
         },
-        "meta": { "type": "object" }
+        "required": ["id", "charts"]
+      }
     },
-    "$defs": {
-        "metricRef": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "key": { "type": "string" },
-                "displayName": { "type": "string" },
-                "unit": { "type": "string" },
-                "format": { "type": "string" }
-            },
-            "required": ["key"]
+    "meta": { "type": "object" }
+  },
+  "$defs": {
+    "metricRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string" },
+        "displayName": { "type": "string" },
+        "unit": { "type": "string" },
+        "format": { "type": "string" }
+      },
+      "required": ["key"]
+    },
+    "chartLayout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "col": { "type": "integer", "minimum": 0 },
+        "row": { "type": "integer", "minimum": 0 },
+        "w": { "type": "integer", "minimum": 1 },
+        "h": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["col", "row", "w", "h"]
+    },
+    "chartOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lineInterpolation": { "type": "string" },
+        "stacked": { "type": "boolean" },
+        "legend": { "type": "boolean" },
+        "grid": { "type": "boolean" }
+      }
+    },
+    "chartConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "enum": ["linear", "area", "bar"] },
+        "colorScheme": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
         },
-        "chartLayout": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "col": { "type": "integer", "minimum": 0 },
-                "row": { "type": "integer", "minimum": 0 },
-                "w": { "type": "integer", "minimum": 1 },
-                "h": { "type": "integer", "minimum": 1 }
-            },
-            "required": ["col", "row", "w", "h"]
+        "metrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/metricRef" }
         },
-        "chartOptions": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "lineInterpolation": { "type": "string" },
-                "stacked": { "type": "boolean" },
-                "legend": { "type": "boolean" },
-                "grid": { "type": "boolean" }
-            }
-        },
-        "chartConfig": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "id": { "type": "string" },
-                "title": { "type": "string" },
-                "type": { "enum": ["linear", "area", "bar"] },
-                "colorScheme": {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": { "type": "string" }
-                },
-                "metrics": {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": { "$ref": "#/$defs/metricRef" }
-                },
-                "layout": { "$ref": "#/$defs/chartLayout" },
-                "width": { "type": "integer", "minimum": 1 },
-                "height": { "type": "integer", "minimum": 1 },
-                "options": { "$ref": "#/$defs/chartOptions" }
-            },
-            "required": ["id", "title", "type", "colorScheme", "metrics"],
-            "oneOf": [
-                { "required": ["layout"] },
-                { "required": ["width", "height"] }
-            ]
-        }
+        "layout": { "$ref": "#/$defs/chartLayout" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "options": { "$ref": "#/$defs/chartOptions" }
+      },
+      "required": ["id", "title", "type", "colorScheme", "metrics"],
+      "oneOf": [{ "required": ["layout"] }, { "required": ["width", "height"] }]
     }
+  }
 }

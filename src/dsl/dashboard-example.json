@@ -18,9 +18,7 @@
           "id": "c1",
           "title": "CPU Usage",
           "type": "linear",
-          "colorScheme": [
-            "#4F46E5"
-          ],
+          "colorScheme": ["#4F46E5"],
           "metrics": [
             {
               "key": "cpu_usage",
@@ -43,9 +41,7 @@
           "id": "c2",
           "title": "Memory (area)",
           "type": "area",
-          "colorScheme": [
-            "#16A34A"
-          ],
+          "colorScheme": ["#16A34A"],
           "metrics": [
             {
               "key": "mem_used",
@@ -75,10 +71,7 @@
           "id": "c3",
           "title": "Throughput",
           "type": "bar",
-          "colorScheme": [
-            "#0EA5E9",
-            "#F97316"
-          ],
+          "colorScheme": ["#0EA5E9", "#F97316"],
           "metrics": [
             {
               "key": "net_in",
