@@ -42,8 +42,10 @@ export function emptyValueForSchema(schema?: JSONSchema7): unknown {
     if (isObjectSchema(schema)) return {};
     if (isNumberLike(schema)) return undefined;
     if (schema.type === "boolean") return false;
+    if (schema.type === "string") return "";
     return "";
 }
+
 
 export function getErrorMessage(err: unknown): string | undefined {
     const msg = (err as { message?: unknown } | undefined)?.message;

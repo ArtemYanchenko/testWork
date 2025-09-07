@@ -13,8 +13,7 @@ import {
     asJSONSchema,
     isObjectSchema,
     isArraySchema,
-    emptyValueForSchema,
-    titleFromName,
+    titleFromName, emptyValueForSchema,
 } from "./utils";
 import { PrimitiveField } from "./PrimitiveField";
 import { ObjectFields } from "./ObjectFields";
@@ -47,14 +46,11 @@ export function ArrayField<T extends FieldValues = FieldValues>({
     const handleAdd = () => {
         if (fields.length >= maxItems) return;
 
-        let value: unknown;
-        if (isObjectSchema(itemsSchema)) {
-            value = {};
-        } else if (isArraySchema(itemsSchema)) {
-            value = [];
-        } else {
-            value = undefined;
-        }
+        const value =
+            isObjectSchema(itemsSchema) ? {} :
+                isArraySchema(itemsSchema) ? [] :
+                    itemsSchema?.type === "string" ? undefined :
+                        emptyValueForSchema(itemsSchema);
 
         append(value as T[ArrayPath<T>][number]);
     };
