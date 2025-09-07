@@ -1,69 +1,64 @@
-# React + TypeScript + Vite
+# Form Builder / Count Matches / DSL Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🌐 Production
 
-Currently, two official plugins are available:
+Готовая версия UI FormBuilder доступна по адресу:
+👉 https://formbuildermts.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Описание
 
-## Expanding the ESLint configuration
+В проекте реализованы три основные части:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Form Builder** — динамические формы на базе [React Hook Form](https://react-hook-form.com/) и [Material UI](https://mui.com/).
+2. **countMatches** — высокопроизводительная функция для подсчёта количества вхождений уникальных элементов массива `A` в массив `B` с использованием `Uint32Array`.
+3. **DSL для дашбордов** — декларативный язык описания структуры дашборда:
+    - секции,
+    - графики (line, area, bar),
+    - сетка (12 колонок, row/column gap),
+    - цветовые схемы,
+    - метрики.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Также в проекте есть:
+- юнит-тесты (Jest),
+- бенчмарки (tinybench),
+- линтер (ESLint).
+- приттер (Prettier)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+## ⚙️ Требования
+
+- Node.js >= 18
+- npm >= 9
+
+---
+
+## 🚀 Установка и запуск
+
+
+### 1. Установка зависимостей
+```bash
+git clone git@github.com:ArtemYanchenko/testWork.git
+cd testWork
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Запуск dev-сервера
+```bash
+npm run dev
 ```
+Приложение откроется по адресу http://localhost:5173
+
+### 3. Тесты
+```bash
+npm test
+```
+Будут запущены все тесты для FormBuilder, countMatches и DSL.
+
+### 4. Бенчмарк 
+```bash
+npm run bench
+```
+Запускает скрипт benchmarks/countMatches.bench.ts, который проверяет производительность countMatches
+
