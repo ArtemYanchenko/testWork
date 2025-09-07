@@ -14,9 +14,9 @@ import {
     isObjectSchema,
     isArraySchema,
     titleFromName, emptyValueForSchema,
-} from "./utils";
-import { PrimitiveField } from "./PrimitiveField";
-import { ObjectFields } from "./ObjectFields";
+} from "../utils.ts";
+import { PrimitiveField } from "./PrimitiveField.tsx";
+import { ObjectFields } from "./ObjectFields.tsx";
 
 type FieldProps<T extends FieldValues = FieldValues> = {
     name: ArrayPath<T>;

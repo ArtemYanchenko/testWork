@@ -5,9 +5,9 @@ import {
     isObjectSchema,
     isArraySchema,
     titleFromName,
-} from "./utils";
-import { PrimitiveField } from "./PrimitiveField";
-import { ArrayField } from "./ArrayField";
+} from "../utils.ts";
+import { PrimitiveField } from "./PrimitiveField.tsx";
+import { ArrayField } from "./ArrayField.tsx";
 import { type Control, type FieldValues, type Path, type ArrayPath } from "react-hook-form";
 
 type Props<T extends FieldValues = FieldValues> = {

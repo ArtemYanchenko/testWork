@@ -21,7 +21,7 @@ import {
     isNumberLike,
     titleFromName,
     getErrorMessage,
-} from "./utils";
+} from "../utils.ts";
 
 type FieldProps<T extends FieldValues = FieldValues> = {
     name: Path<T>;
