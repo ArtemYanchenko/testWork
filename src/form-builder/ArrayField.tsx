@@ -4,7 +4,7 @@ import {
     type Control,
     type FieldValues,
     type ArrayPath,
-    type Path,
+    type Path, useWatch,
 } from "react-hook-form";
 import { Stack, Typography, Paper, Button, IconButton } from "@mui/material";
 import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
@@ -46,15 +46,28 @@ export function ArrayField<T extends FieldValues = FieldValues>({
 
     const handleAdd = () => {
         if (fields.length >= maxItems) return;
-        const value = isObjectSchema(itemsSchema)
-            ? {}
-            : isArraySchema(itemsSchema)
-                ? []
-                : emptyValueForSchema(itemsSchema);
+
+        let value: unknown;
+        if (isObjectSchema(itemsSchema)) {
+            value = {};
+        } else if (isArraySchema(itemsSchema)) {
+            value = [];
+        } else {
+            value = undefined;
+        }
+
         append(value as T[ArrayPath<T>][number]);
     };
 
+
+
     const didInitRef = useRef(false);
+
+    const firstValue = useWatch({
+        control,
+        name: `${name}.0` as Path<T>,
+    });
+
     useEffect(() => {
         if (didInitRef.current) return;
         if (minItems > 0 && fields.length === 0) {
@@ -75,7 +88,13 @@ export function ArrayField<T extends FieldValues = FieldValues>({
                     variant="outlined"
                     size="small"
                     onClick={handleAdd}
-                    disabled={fields.length >= maxItems}
+                    disabled={
+                        fields.length >= maxItems ||
+                        (fields.length > 0 &&
+                            !isObjectSchema(itemsSchema) &&
+                            !isArraySchema(itemsSchema) &&
+                            (firstValue === undefined || firstValue === ""))
+                    }
                 >
                     Add
                 </Button>
