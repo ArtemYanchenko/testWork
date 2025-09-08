@@ -42,7 +42,7 @@ npm install
 ```bash
 npm run dev
 ```
-Приложение откроется по адресу http://localhost:5173
+Приложение откроется по адресу: http://localhost:5173
 
 ### 3. Тесты
 ```bash
